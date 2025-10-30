@@ -1,3 +1,5 @@
+
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -18,7 +20,8 @@ const asObject = anecdote => {
 }
 
 const initialState = anecdotesAtStart.map(asObject)
-const reducer = (state = initialState, action) => {
+
+const anecdotereducer = (state = initialState, action) => {
 
   switch(action.type){
     case 'VOTE':{
@@ -26,16 +29,41 @@ const reducer = (state = initialState, action) => {
       const updateVoto = {
         ...updateAnecdote,
         votes: updateAnecdote.votes + 1}
-      return state.map(anecdote => {
+      const newState = state.map(anecdote => {
         return anecdote.id == action.payload.id ? updateVoto : anecdote
       })
+      const orderState = newState.sort((a,b)=> b.votes - a.votes)
+      return orderState
+    }
+    case('NEWANECDOTE'):{
+      return [...state, asObject(action.payload.anecdote)]
     }
   }
 
-  console.log('state now: ', state)
-  console.log('action', action)
+
 
   return state
 }
 
-export default reducer
+//ACTION CREATORS
+
+export const vote = id => {
+    return{
+        type: 'VOTE',
+        payload:{id}
+      }
+    }
+
+export const newAnecdote = (event) =>{
+    event.preventDefault()
+    console.log('PASADA:',event.target.anecdote.value)
+    const anecdote = event.target.anecdote.value
+    event.target.anecdote.value = ''
+
+    return{
+      type:'NEWANECDOTE', 
+      payload:{anecdote}
+    }
+  }
+
+export default anecdotereducer
