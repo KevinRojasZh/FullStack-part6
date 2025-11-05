@@ -1,4 +1,4 @@
-import { filter } from "../reducers/filterReducer"
+import { setFilter } from "../slicers/filterSlice"
 import { useDispatch } from "react-redux"
 
 
@@ -7,7 +7,7 @@ const Filter =() =>{
 
     const handleChange = (event) => {
         const value = event.target.value
-        dispatch(filter(value))
+        dispatch(setFilter(value))
     }
 
 
