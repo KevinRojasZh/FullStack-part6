@@ -3,19 +3,21 @@ import { useDispatch } from 'react-redux'
 import {setTimeNotification} from '../slicers/notificationSlice'
 
 
+
 const AnecdoteForm= () =>{
 
   const dispatch = useDispatch()
 
-    const handleNewAnecdote = (event) =>{
+    const handleNewAnecdote = async (event) =>{
       event.preventDefault() 
       if (event.target.anecdote.value === ''){
         const message = 'None anecdote written'
         return dispatch(setTimeNotification(message))
       }else{
-        let info = event.target.anecdote.value
-        dispatch(newAnecdote(info))
-        dispatch(setTimeNotification('Anecdote created'))
+        let content = event.target.anecdote.value
+        event.target.anecdote.value = ''
+          dispatch(newAnecdote(content))
+          dispatch(setTimeNotification('Anecdote created'))
       }
     }    
 return(

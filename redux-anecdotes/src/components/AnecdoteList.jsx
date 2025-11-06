@@ -1,6 +1,6 @@
-import { vote } from '../slicers/anecdoteSlice'
 import { useDispatch,useSelector } from 'react-redux'
 import { setTimeNotification } from '../slicers/notificationSlice'
+import { votedAnecdote } from '../slicers/anecdoteSlice'
 
 
 const AnecdoteList= () =>{
@@ -9,10 +9,9 @@ const AnecdoteList= () =>{
   const dispatch = useDispatch()
 
   const handlevote = id => {
-    dispatch(vote(id)) 
+    dispatch(votedAnecdote(id)) 
     dispatch(setTimeNotification('Voted!'))
   }
-
   const anecdotesToShow = anecdotes.filter(anecdote => 
     anecdote.content.toLowerCase().includes(filter.toLowerCase())
   )
